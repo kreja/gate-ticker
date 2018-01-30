@@ -41,7 +41,7 @@ module.exports = {
   output: {
     filename: '[name].js',
     chunkFilename: '[id].chunk.js',
-    path: path.join(__dirname, '/chrome/dist'),
+    path: path.join(__dirname, '/gate-ticker/dist'),
     publicPath: '/dist/'
   },
 

@@ -1,6 +1,6 @@
 # gate ticker
 
-Easily catch up on exchanges on Gate!
+A chrome plugin to easily catch up on exchanges on [Gate](https://gate.io/signup/707518)!
 
 ![](https://img.alicdn.com/tfs/TB1M4xIXntYBeNjy1XdXXXXyVXa-640-400.png)
 ![](https://img.alicdn.com/tfs/TB1TxxIXntYBeNjy1XdXXXXyVXa-1280-800.png)

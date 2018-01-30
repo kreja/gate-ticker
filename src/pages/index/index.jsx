@@ -2,7 +2,7 @@
 
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { List, Toast, Icon } from 'antd-mobile';
+import { List, Toast, Icon, Flex } from 'antd-mobile';
 import fetch from '../../utils/ajax.js';
 import constants from '../../utils/constants.js';
 
@@ -89,12 +89,14 @@ class Index extends React.Component {
 
   render() {
     const { dataList, isLoading } = this.state;
-    console.log('dataList', dataList)
 
     return (
       <div className="index-page">
-        <h1 className="title">gate ticker</h1>
-        { isLoading && <Icon className="loading" type="loading" /> }
+        <Flex align="center">
+          <a className="btn-setting iconfont icon-setting" href="./options.html" target="_blank"></a>
+          <Flex.Item><h1 className="title">gate ticker</h1></Flex.Item>
+          <span className="loading">{ isLoading && <Icon type="loading" /> }</span>
+        </Flex>
         <List className="coin-list">
           {
             dataList.map((item, index) => {
