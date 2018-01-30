@@ -1,0 +1,73 @@
+@import '../../styles/index.scss';
+@import '../../styles/font.scss';
+
+html, body {
+  color: #062940;
+  width: 100%;
+  min-height: 300px;
+  min-width: 320px;
+  max-height: 600px;
+  -webkit-overflow-scrolling: touch;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-size: 12px;
+  font-family: PingFangSC-Regular, Roboto, "Helvetica Neue", Helvetica, Tahoma, Arial, "Microsoft YaHei", "PingFang SC";
+}
+
+a {
+  color: #062940;
+}
+a:hover {
+  text-decoration: none;
+}
+
+.index-page{
+  .loading{
+    position: absolute;
+    top: 12px;
+    right: 12px;
+  }
+  .title{
+    text-transform: uppercase;
+    text-align: center;
+    margin: 10px 0;
+  }
+  .coin-list{
+
+    .am-list-item:nth-child(2n){
+      background: #efefef;
+    }
+    .am-list-item .am-list-line .am-list-extra{
+      color: #fff;
+    }
+    .rate-change{
+      vertical-align: middle;
+    }
+    .coin-name{
+      text-transform: uppercase;
+    }
+    .up{
+      color: #de5959;
+      background: #de5959;
+    }
+    .down{
+      color: #008069;
+      background: #008069;
+    }
+    .same{
+      background: grey;
+    }
+    .percent{
+      padding: 0 3px 3px;
+      border-radius: 2px;
+      color: #fff;
+    }
+    .price{
+      background: transparent;
+      position: absolute;
+      left: 118px;
+    }
+  }
+}

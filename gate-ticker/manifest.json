@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+  "name": "Gate Ticker",
+  "description": "Easily catch up on exchanges on Gate! 获取比特儿的价格数据",
+  "version": "1.2",
+  "browser_action": {
+    "default_icon": "icons/icon128.png",
+    "default_popup": "index.html",
+    "default_title": "Gate Ticker"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "24": "icons/icon24.png",
+    "32": "icons/icon32.png",
+    "64": "icons/icon64.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "\u003Call_urls>"
+  ],
+  "options_page": "options.html"
+}
