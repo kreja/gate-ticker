@@ -27,10 +27,12 @@ const postcssOpts = {
   ],
 };
 
-module.exports = {
+const config = {
   devtool: isDev ? 'source-map' : '', // or 'inline-source-map'
   devServer: {
-    disableHostCheck: true
+    disableHostCheck: true,
+    hot: false, // stop auto refresh
+    inline: false, // stop auto refresh
   },
 
   entry: {
@@ -96,4 +98,6 @@ module.exports = {
     new ExtractTextPlugin({ filename: '[name].css', allChunks: true }),
     // ...otherPlugins
   ],
-}
+};
+
+module.exports = config;

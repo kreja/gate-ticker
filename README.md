@@ -19,3 +19,9 @@ If you like this plugin, you can send some DOGE or any ERC20 token to support me
 My DOGE address is D5ZvpqrkQ9wpuGfboCAgkZ9pHktTJjHi2A
 
 My ETH address is 0x7bDef294cB25FA8e58Cdb4cece07f3132364Ed79
+
+Appreciate it!
+
+# dev
+dev-app for development
+gate-ticker for publish

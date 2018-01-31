@@ -15,11 +15,13 @@ import API from './api';
 export default function fetch(params = {}, cb) {
     const { api } = params;
     const apiInfo = API[api];
-    const { local, remote, ...others } = apiInfo;
 
     if (!apiInfo) {
-        throw new Error(`Can not find api ${api}`);
+        params.err && params.err(`${chrome.i18n.getMessage("apiNotFound")} ${api}`);
+        return;
     }
+
+    const { local, remote, ...others } = apiInfo || {};
 
     params.url = API[api][Utils.isLocal() ? 'local' : 'remote'];
     const finalParams = Object.assign({}, params, others);
@@ -38,11 +40,10 @@ function fetchData(params, cb) {
         method: params.method || 'get',
         ...others,
         success: (res = {}) => {      
-            // todo::gate 接口不规范啊
             params.suc && params.suc(res);
         },
         error: (err) => {
-            params.err && params.err('fetch fail');
+            params.err && params.err(chrome.i18n.getMessage("fetchfail"));
         }
     });
 }

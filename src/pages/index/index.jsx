@@ -65,8 +65,7 @@ class Index extends React.Component {
         this.setState({
           isLoading: false
         });
-        Toast.fail('加载失败', 2)
-        console.log(e)
+        Toast.fail(e || chrome.i18n.getMessage("loadfail"), 2)
       }
     })
   }
@@ -94,7 +93,7 @@ class Index extends React.Component {
       <div className="index-page">
         <Flex align="center">
           <a className="btn-setting iconfont icon-setting" href="./options.html" target="_blank"></a>
-          <Flex.Item><h1 className="title">gate ticker</h1></Flex.Item>
+          <Flex.Item><h1 className="title">{chrome.i18n.getMessage("appName")}</h1></Flex.Item>
           <span className="loading">{ isLoading && <Icon type="loading" /> }</span>
         </Flex>
         <List className="coin-list">

@@ -1,0 +1,38 @@
+{
+  "appName": {
+    "message": "比特儿行情",
+    "description": "应用名"
+  },
+  "appDesc": {
+    "message": "获取比特儿 gate.io 的交易行情数据。",
+    "description": "应用介绍"
+  },
+  "confTitle": {
+    "message": "比特儿行情配置",
+    "description": "配置页的标题"
+  },
+  "chooseRefreshInterval": {
+    "message": "选择刷新时间"
+  },
+  "chooseExchange": {
+    "message": "选择交易货币"
+  },
+  "save": {
+    "message": "保存"
+  },
+  "saveSuccess": {
+    "message": "保存成功"
+  },
+  "loading": {
+    "message": "加载中"
+  },
+  "loadfail": {
+    "message": "加载失败"
+  },
+  "fetchfail": {
+    "message": "请求失败"
+  },
+  "apiNotFound": {
+    "message": "找不到接口"
+  }
+}

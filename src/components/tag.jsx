@@ -1,5 +1,5 @@
 /**
- * 加强版 Tag，onclick 会返回 value
+ * Tag，onclick returns value
  */
 
 import React, { PropTypes } from 'react';

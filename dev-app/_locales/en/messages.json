@@ -1,0 +1,39 @@
+{
+  "appName": {
+    "message": "Gate Ticker",
+    "description": "app name."
+  },
+  "appDesc": {
+    "message": "Easily catch up on exchanges on gate.io.",
+    "description": "app description"
+  },
+  "confTitle": {
+    "message": "gate ticker configuration",
+    "description": "title of configuration page"
+  },
+  "chooseRefreshInterval": {
+    "message": "choose Refresh Interval"
+  },
+  "chooseExchange": {
+    "message": "choose Exchange"
+  },
+  "save": {
+    "message": "save"
+  },
+  "saveSuccess": {
+    "message": "success"
+  },
+  "loading": {
+    "message": "loading"
+  },
+  "loadfail": {
+    "message": "fail"
+  },
+  "fetchfail": {
+    "message": "fail"
+  },
+  "apiNotFound": {
+    "message": "Can not find api"
+  }
+}
+ 

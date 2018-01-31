@@ -3,14 +3,12 @@
     -webkit-transform-origin: $x $y;
 }
 
-// 单行文字截断
 @mixin text-overflow() {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-// 多行文字截断
 @mixin text-overflow-lines($line: 2){
     display: -webkit-box;
     -webkit-line-clamp: $line;

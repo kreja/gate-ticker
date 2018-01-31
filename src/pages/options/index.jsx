@@ -30,7 +30,7 @@ class Index extends React.Component {
     const { refreshIntervalMs, selectMaps } = this.props;
 
     this.state = {
-      refreshIntervalMs, // 单位 ms
+      refreshIntervalMs, // unit: ms
       selectMaps, // eg. {usdt: [btc, eth]}
 
       markets: [],
@@ -44,7 +44,7 @@ class Index extends React.Component {
 
   getPairs = () => {
     const t = setTimeout(() => {
-      Toast.loading('加载中...');
+      Toast.loading(chrome.i18n.getMessage("loading"));
     }, 500);
 
     fetch({
@@ -77,14 +77,13 @@ class Index extends React.Component {
       },
       err: (e) => {
         clearTimeout(t);
-        Toast.fail('加载失败', 2)
-        console.log(e)
+        Toast.fail(e || chrome.i18n.getMessage("loadfail"), 2)
       }
     })
   }
 
   changeInterval = (range = []) => {
-    if(range[1] > 0){ // 必须大于 0
+    if(range[1] > 0){ // interval must > 0
       this.setState({
         refreshIntervalMs: range[1]
       });
@@ -94,9 +93,9 @@ class Index extends React.Component {
   changeExchange = (selected, value='') => {
     const { selectMaps } = this.state;
     const [exchange, market] = value.split('_') || ['', ''];
-    let marketSelects = selectMaps[market]; // 当前市场下选中的列表
+    let marketSelects = selectMaps[market]; // selected list under current market
 
-    if (selected) { // 加入
+    if (selected) { // add
       if(!marketSelects){
         marketSelects = [];
       }
@@ -104,7 +103,7 @@ class Index extends React.Component {
       if (marketSelects.indexOf(exchange) < 0) {
         marketSelects.push(exchange);
       }
-    } else if (marketSelects) { // 删除
+    } else if (marketSelects) { // remove
       marketSelects.splice(marketSelects.indexOf(exchange), 1);
     }
     
@@ -120,7 +119,7 @@ class Index extends React.Component {
         refreshIntervalMs,
         selectMaps
       }, (items) => {
-        Toast.success('保存成功！', 1);
+        Toast.success(chrome.i18n.getMessage("saveSuccess"), 1);
       });
     } else {
       console.log(this.state)
@@ -136,10 +135,10 @@ class Index extends React.Component {
 
     return (
       <div className="options-page">
-        <h1 className="title">gate ticker configuration</h1>
+        <h1 className="title">{chrome.i18n.getMessage("confTitle")}</h1>
         <WhiteSpace size="lg" />
 
-        <h2>选择刷新时间</h2>
+        <h2>{chrome.i18n.getMessage("chooseRefreshInterval")}</h2>
         <Flex>
           <Flex.Item>
             <Range
@@ -162,7 +161,7 @@ class Index extends React.Component {
         </Flex>
         <WhiteSpace size="lg" />
 
-        <h2>选择交易货币</h2>
+        <h2>{chrome.i18n.getMessage("chooseExchange")}</h2>
         <Tabs tabs={tabs} animated={false}>
           {
             markets.map((m) => {
@@ -184,7 +183,7 @@ class Index extends React.Component {
         </Tabs>
         <WhiteSpace size="lg" />
 
-        <Button className="btn-save" type="primary" onClick={this.save}>保存</Button>
+        <Button className="btn-save" type="primary" onClick={this.save}>{chrome.i18n.getMessage("save")}</Button>
       </div>
     );
   }
