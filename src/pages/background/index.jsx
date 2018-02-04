@@ -40,6 +40,7 @@ const background = {
 
   processData: (allTickers) => {
     let notices = [];
+    let count = 0;
 
     for(var market in _cfg.selectMaps){
       const curExchangeList = _cfg.selectMaps[market] || [];
@@ -60,6 +61,10 @@ const background = {
               notices.push(`${coin} is ${symbol} ${curNotice.rate} ${market}`);
               curNotice.hasReached = true;
             }
+
+            if(curNotice.hasReached){
+              count++;
+            }
           }
         });
       });
@@ -76,6 +81,10 @@ const background = {
           }, 5000);
         });
       }
+
+      chrome.browserAction.setBadgeText({
+        text: count ? count.toString() : ''
+      });
     }
   }
 };
