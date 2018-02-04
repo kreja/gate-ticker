@@ -12,10 +12,10 @@
     "description": "title of configuration page"
   },
   "chooseRefreshInterval": {
-    "message": "choose Refresh Interval"
+    "message": "Choose Refresh Interval"
   },
   "chooseExchange": {
-    "message": "choose Exchange"
+    "message": "Choose Exchange"
   },
   "save": {
     "message": "save"
@@ -34,6 +34,21 @@
   },
   "apiNotFound": {
     "message": "Can not find api"
+  },
+  "setTip": {
+    "message": "Set Target Price"
+  },
+  "setTipTip": {
+    "message": ""
+  },
+  "chooseNoticeInterval": {
+    "message": "Choose Notice Interval"
+  },
+  "chooseNoticeIntervalTip": {
+    "message": ""
+  },
+  "NoticeTitlePriceReached": {
+    "message": "Target Price Reached!"
   }
 }
  

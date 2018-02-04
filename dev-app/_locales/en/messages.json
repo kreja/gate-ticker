@@ -46,6 +46,9 @@
   },
   "chooseNoticeIntervalTip": {
     "message": ""
+  },
+  "NoticeTitlePriceReached": {
+    "message": "Target Price Reached!"
   }
 }
  

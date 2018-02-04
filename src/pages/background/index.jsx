@@ -1,7 +1,10 @@
 'use strict';
 
+import {} from 'antd-mobile'; // for shared
 import fetch from '../../utils/ajax.js';
 import constants from '../../utils/constants.js';
+
+import 'antd-mobile/dist/antd-mobile.css'; // for shared
 
 const { defaultRefreshIntervalMs, defaultSelectedMaps, symbols, defaultNoticeIntervalMs } = constants;
 let _cfg;
@@ -81,8 +84,8 @@ const background = {
         chrome.notifications.create('', {
           type: 'basic',
           iconUrl: 'icons/icon128.png',
-          title: 'Target Price Reached!',
-          message: notices.join(';')
+          title: chrome.i18n.getMessage("NoticeTitlePriceReached"),
+          message: notices.join('; ')
         }, function(notificationId) {
           setTimeout(() => {
             chrome.notifications.clear(notificationId, (wasCleared) => {});

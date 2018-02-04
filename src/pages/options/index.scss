@@ -95,8 +95,10 @@ a:hover {
     }
   }
   .btn-save{
-    width: 500px;
-    margin: 20px auto;
+    position: fixed !important;
+    bottom: 50px;
+    right: 20px;
+    width: 120px;
     cursor: pointer;
   }
 }

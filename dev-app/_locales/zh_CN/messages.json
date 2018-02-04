@@ -12,7 +12,7 @@
     "description": "配置页的标题"
   },
   "chooseRefreshInterval": {
-    "message": "选择刷新时间"
+    "message": "选择数据刷新时间"
   },
   "chooseExchange": {
     "message": "选择交易货币"
@@ -39,12 +39,15 @@
     "message": "设置价格提醒"
   },
   "setTipTip": {
-    "message": "gate 数据有延迟，建议设置宽松一些"
+    "message": "gate 数据有延迟，建议设置宽松一些；不需要提醒就清除价格"
   },
   "chooseNoticeInterval": {
     "message": "选择提醒间隔时间"
   },
   "chooseNoticeIntervalTip": {
     "message": "分钟内已经提醒过的设置不会再提醒"
+  },
+  "NoticeTitlePriceReached": {
+    "message": "价格提醒"
   }
 }
