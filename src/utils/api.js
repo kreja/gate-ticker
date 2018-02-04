@@ -1,6 +1,6 @@
 const apis = {
     tickers: { // all exchange prices
-        local: '/data/tickers.json',
+        local: 'http://127.0.0.1:8000/data/tickers.json',
         remote: 'http://data.gate.io/api2/1/tickers',
         method: 'get',
         type: 'json'

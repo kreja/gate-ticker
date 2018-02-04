@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'iconfont';  /* project id 559343 */
-  src: url('https://at.alicdn.com/t/font_559343_mn6cx0pyhjkedn29.eot');
-  src: url('https://at.alicdn.com/t/font_559343_mn6cx0pyhjkedn29.eot?#iefix') format('embedded-opentype'),
-  url('https://at.alicdn.com/t/font_559343_mn6cx0pyhjkedn29.woff') format('woff'),
-  url('https://at.alicdn.com/t/font_559343_mn6cx0pyhjkedn29.ttf') format('truetype'),
-  url('https://at.alicdn.com/t/font_559343_mn6cx0pyhjkedn29.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_559343_55c51lybb8392j4i.eot');
+  src: url('//at.alicdn.com/t/font_559343_55c51lybb8392j4i.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_559343_55c51lybb8392j4i.woff') format('woff'),
+  url('//at.alicdn.com/t/font_559343_55c51lybb8392j4i.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_559343_55c51lybb8392j4i.svg#iconfont') format('svg');
 }
 .iconfont {
     font-family: "iconfont" !important;
@@ -15,3 +15,4 @@
     -moz-osx-font-smoothing: grayscale;
 }
 .icon-setting:before { content: "\e7f9"; }
+.icon-tip:before { content: "\e600"; }

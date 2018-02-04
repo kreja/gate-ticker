@@ -11,17 +11,20 @@ import 'antd-mobile/dist/antd-mobile.css';
 import './index.scss';
 
 const Item = List.Item;
-const { defaultRefreshIntervalMs, maxIntervalMs, defaultSelectedMaps, symbols } = constants;
+const { defaultRefreshIntervalMs, maxIntervalMs, defaultSelectedMaps, symbols, defaultNoticeIntervalMs, maxNoticeIntervalMs } = constants;
 const getSecond = ms => ms / 1000;
+const getMinute = ms => ms / 1000 / 60;
 
 class Index extends React.Component {
   static propTypes = {
+    noticeIntervalMs: PropTypes.number,
     refreshIntervalMs: PropTypes.number,
     selectMaps: PropTypes.object,
     noticeMaps: PropTypes.object
   }
 
   static defaultProps = {
+    noticeIntervalMs: defaultNoticeIntervalMs,
     refreshIntervalMs: defaultRefreshIntervalMs,
     selectMaps: defaultSelectedMaps,
     noticeMaps: {}
@@ -30,9 +33,10 @@ class Index extends React.Component {
   constructor(props) {
     super(props);
     
-    const { refreshIntervalMs, selectMaps, noticeMaps } = this.props;
+    const { noticeIntervalMs, refreshIntervalMs, selectMaps, noticeMaps } = this.props;
 
     this.state = {
+      noticeIntervalMs,
       refreshIntervalMs, // unit: ms
       selectMaps, // eg. {usdt: [btc, eth]}
       noticeMaps,
@@ -94,6 +98,14 @@ class Index extends React.Component {
     }
   }
 
+  changeNoticeInterval = (range = []) => {
+    if(range[1] > 0){ // interval must > 0
+      this.setState({
+        noticeIntervalMs: range[1]
+      });
+    }
+  }
+
   changeExchange = (selected, value='') => {
     const { selectMaps } = this.state;
     const [exchange, market] = value.split('_') || ['', ''];
@@ -131,10 +143,11 @@ class Index extends React.Component {
   }
 
   save = () => {
-    const { selectMaps, refreshIntervalMs, noticeMaps } = this.state;
+    const { selectMaps, refreshIntervalMs, noticeMaps, noticeIntervalMs } = this.state;
 
     if (chrome.storage) {
       chrome.storage.sync.set({
+        noticeIntervalMs,
         refreshIntervalMs,
         selectMaps,
         noticeMaps
@@ -151,8 +164,7 @@ class Index extends React.Component {
   }
 
   render() {
-    console.log(this.state.noticeMaps)
-    const { refreshIntervalMs, markets, exchangeMaps, selectMaps, noticeMaps } = this.state;
+    const { noticeIntervalMs, refreshIntervalMs, markets, exchangeMaps, selectMaps, noticeMaps } = this.state;
 
     const tabs = markets.map((m) => {
       return {title: m};
@@ -164,7 +176,7 @@ class Index extends React.Component {
         <WhiteSpace size="lg" />
 
         <h2>{chrome.i18n.getMessage("chooseRefreshInterval")}</h2>
-        <Flex>
+        <Flex className="half-w">
           <Flex.Item>
             <Range
               handleStyle={[{display: 'none'}, {
@@ -183,6 +195,32 @@ class Index extends React.Component {
             />
           </Flex.Item>
           <div className="interval">{getSecond(refreshIntervalMs)}s</div>
+        </Flex>
+        <WhiteSpace size="lg" />
+
+        <h2>
+          {chrome.i18n.getMessage("chooseNoticeInterval")}
+          <span className="tip">{getMinute(noticeIntervalMs)}{chrome.i18n.getMessage("chooseNoticeIntervalTip")}</span>
+        </h2>
+        <Flex className="half-w">
+          <Flex.Item>
+            <Range
+              handleStyle={[{display: 'none'}, {
+                borderRadius: 0,
+                width: '6px',
+                height: '16px',
+                marginLeft: '-3px',
+                marginTop: '-7px',
+              }]}
+              min={0}
+              max={maxNoticeIntervalMs}
+              step={1000 * 60}
+              value={[0, noticeIntervalMs]}
+              onChange={this.changeNoticeInterval}
+              onAfterChange={()=>{}}
+            />
+          </Flex.Item>
+          <div className="interval">{getMinute(noticeIntervalMs)}min</div>
         </Flex>
         <WhiteSpace size="lg" />
 
@@ -210,7 +248,10 @@ class Index extends React.Component {
             </Tabs>
           </Flex.Item>
           <Flex.Item>
-            <h2>设置提醒todo::（价格延迟，建议设置宽松一些）</h2>
+            <h2>
+              {chrome.i18n.getMessage("setTip")}
+              <span className="tip">{chrome.i18n.getMessage("setTipTip")}</span>
+            </h2>
             <List className="notice-list">
               {
                 markets.map((m) => {
@@ -250,6 +291,7 @@ class Index extends React.Component {
 
 if (chrome.storage) {
   chrome.storage.sync.get({
+    noticeIntervalMs: defaultNoticeIntervalMs,
     refreshIntervalMs: defaultRefreshIntervalMs,
     selectMaps: defaultSelectedMaps,
     noticeMaps: {}

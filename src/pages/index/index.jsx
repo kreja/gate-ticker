@@ -10,7 +10,7 @@ import 'antd-mobile/dist/antd-mobile.css';
 import './index.scss';
 
 const Item = List.Item;
-const { defaultRefreshIntervalMs, defaultSelectedMaps } = constants;
+const { defaultRefreshIntervalMs, defaultSelectedMaps, symbols } = constants;
 
 class Index extends React.Component {
   static propTypes = {
@@ -88,6 +88,7 @@ class Index extends React.Component {
 
   render() {
     const { dataList, isLoading } = this.state;
+    const { noticeMaps } = this.props;
 
     return (
       <div className="index-page">
@@ -101,6 +102,7 @@ class Index extends React.Component {
             dataList.map((item, index) => {
               const { last, percentChange, exchange } = item;
               let cls;
+              let reached = false;
 
               switch(true) {
                 case percentChange > 0:
@@ -114,12 +116,22 @@ class Index extends React.Component {
                   break;
               }
 
+              symbols.map((syItem) => {
+                const { symbol, flag } = syItem;
+                const curNotice = noticeMaps[`${exchange}${symbol}`];
+
+                if(curNotice && (last - curNotice.rate) * flag >= 0){
+                  reached = symbol;
+                }
+              });
+
               return <Item key={index} extra={<span className={`percent ${cls}`}>
                   {percentChange > 0 ? <span>+</span> : ''}
                   <span className="rate-change">{percentChange != undefined ? `${percentChange.toFixed(2)}` : '--'}%</span>
                 </span>}>
                 <div className="coin-name">
-                  {exchange}
+                  <a href={`https://gate.io/trade/${exchange}`} target="_blank">{exchange}</a>
+                  { reached && <span className={`iconfont icon-tip ${reached}`}></span> }
                   <span className={`price ${cls}`}>{last != undefined ? last : '--'}</span>
                 </div>
               </Item>;
@@ -135,7 +147,8 @@ if (chrome.storage) {
   chrome.storage.sync.get({
     dataList: [],
     refreshIntervalMs: defaultRefreshIntervalMs,
-    selectMaps: defaultSelectedMaps
+    selectMaps: defaultSelectedMaps,
+    noticeMaps: {}
   }, (items) => {
     ReactDOM.render(<Index {...items} />, document.getElementById('example'));
   });

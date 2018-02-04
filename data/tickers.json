@@ -1,7 +1,7 @@
 {
   "btc_usdt": {
     "result": "true",
-    "last": 11132.8,
+    "last": 9600,
     "lowestAsk": 11100,
     "highestBid": 11078.99,
     "percentChange": -4.4857411764706,
@@ -9,6 +9,17 @@
     "quoteVolume": 511.7348,
     "high24hr": 11361.25,
     "low24hr": 10614.68
+  },
+  "ltc_usdt": {
+    "result": "true",
+    "last": 165,
+    "lowestAsk": 178.65,
+    "highestBid": 178,
+    "percentChange": 4.111836634895,
+    "baseVolume": 817799.83,
+    "quoteVolume": 4642.8219,
+    "high24hr": 182.75,
+    "low24hr": 170.34
   },
   "bch_usdt": {
     "result": "true",
@@ -53,17 +64,6 @@
     "quoteVolume": 16935.0931,
     "high24hr": 41.14,
     "low24hr": 37.74
-  },
-  "ltc_usdt": {
-    "result": "true",
-    "last": 178,
-    "lowestAsk": 178.65,
-    "highestBid": 178,
-    "percentChange": 4.111836634895,
-    "baseVolume": 817799.83,
-    "quoteVolume": 4642.8219,
-    "high24hr": 182.75,
-    "low24hr": 170.34
   },
   "dash_usdt": {
     "result": "true",

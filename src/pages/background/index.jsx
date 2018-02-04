@@ -3,8 +3,9 @@
 import fetch from '../../utils/ajax.js';
 import constants from '../../utils/constants.js';
 
-const { defaultRefreshIntervalMs, defaultSelectedMaps, symbols } = constants;
+const { defaultRefreshIntervalMs, defaultSelectedMaps, symbols, defaultNoticeIntervalMs } = constants;
 let _cfg;
+let lastCount = 0;
 
 const background = {
   init: () => {
@@ -13,6 +14,7 @@ const background = {
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       if (message.method === 'CFGCHANGE') { // get new configuration
         chrome.storage.sync.get({
+          noticeIntervalMs: defaultNoticeIntervalMs,
           refreshIntervalMs: defaultRefreshIntervalMs,
           selectMaps: defaultSelectedMaps,
           noticeMaps: {}
@@ -40,7 +42,8 @@ const background = {
 
   processData: (allTickers) => {
     let notices = [];
-    let count = 0;
+    let newConut = 0;
+    const curTime = (new Date()).getTime();
 
     for(var market in _cfg.selectMaps){
       const curExchangeList = _cfg.selectMaps[market] || [];
@@ -57,13 +60,18 @@ const background = {
 
             if(!reached){
               curNotice.hasReached = false;
-            }else if(!curNotice.hasReached){
-              notices.push(`${coin} is ${symbol} ${curNotice.rate} ${market}`);
+            }else if(!curNotice.hasReached){ // from not reach to reach
               curNotice.hasReached = true;
+
+              // the first time or has reached the interval
+              if(!curNotice.lastNoticeTime || curNotice.lastNoticeTime + _cfg.noticeIntervalMs < curTime){
+                notices.push(`${coin} is ${symbol} ${curNotice.rate} ${market}`);
+                curNotice.lastNoticeTime = curTime;
+              }
             }
 
             if(curNotice.hasReached){
-              count++;
+              newConut++;
             }
           }
         });
@@ -81,15 +89,19 @@ const background = {
           }, 5000);
         });
       }
+    }
 
+    if(newConut != lastCount ){
       chrome.browserAction.setBadgeText({
-        text: count ? count.toString() : ''
+        text: newConut ? newConut.toString() : ''
       });
+      lastCount = newConut;
     }
   }
 };
 
 chrome.storage.sync.get({
+  noticeIntervalMs: defaultNoticeIntervalMs,
   refreshIntervalMs: defaultRefreshIntervalMs,
   selectMaps: defaultSelectedMaps,
   noticeMaps: {}
