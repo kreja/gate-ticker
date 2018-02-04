@@ -93,7 +93,7 @@ class Index extends React.Component {
       <div className="index-page">
         <Flex align="center">
           <a className="btn-setting iconfont icon-setting" href="./options.html" target="_blank"></a>
-          <Flex.Item><h1 className="title">{chrome.i18n.getMessage("appName")}</h1></Flex.Item>
+          <Flex.Item><h1 className="title"><a href="https://gate.io/ref/707518" target="_blank">{chrome.i18n.getMessage("appName")}</a></h1></Flex.Item>
           <span className="loading">{ isLoading && <Icon type="loading" /> }</span>
         </Flex>
         <List className="coin-list">

@@ -21,3 +21,6 @@ npm-debug.log
 .module-cache
 .*.sw*
 dist
+
+*.zip
+design.js

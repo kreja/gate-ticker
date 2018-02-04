@@ -2,3 +2,17 @@
 
 @import './variables.scss';
 @import './mixins.scss';
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+  html:not([data-scale]) .am-list-body::after {
+    height: 0;
+  }
+}
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+  html:not([data-scale]) .am-list-body div:not(:last-child) .am-list-line::after {
+    height: 0;
+  }
+}
+.am-list-item:nth-child(2n){
+  background: #efefef;
+}

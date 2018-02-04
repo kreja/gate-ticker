@@ -9,9 +9,9 @@ A chrome plugin to easily catch up on exchanges on [Gate](https://gate.io/signup
 [https://chrome.google.com/webstore/detail/gate-ticker/oagpmkjkbaiglagdbjmikkppogcjnahl](https://chrome.google.com/webstore/detail/gate-ticker/oagpmkjkbaiglagdbjmikkppogcjnahl)
 
 # Todo
-- alert me when the price is...
-- multi language
-- add charts
+- [x] multi language
+- [x] alert me when the price is...
+- [ ] add charts
 
 # Support me
 If you like this plugin, you can send some DOGE or any ERC20 token to support me.
@@ -23,5 +23,5 @@ My ETH address is 0x7bDef294cB25FA8e58Cdb4cece07f3132364Ed79
 Appreciate it!
 
 # dev
-dev-app for development
-gate-ticker for publish
+- dev-app for development
+- gate-ticker for publish

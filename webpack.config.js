@@ -38,6 +38,7 @@ const config = {
   entry: {
     "index": path.resolve(__dirname, 'src/pages/index/index'),
     "options": path.resolve(__dirname, 'src/pages/options/index'),
+    "background": path.resolve(__dirname, 'src/pages/background/index'),
   },
 
   output: {

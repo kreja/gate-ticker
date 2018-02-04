@@ -4,7 +4,16 @@ const constants = {
   defaultSelectedMaps: { // default selected exchange list
     usdt: ['btc', 'eth'],
     btc: ['eth']
-  }
+  },
+
+  // for notice
+  symbols: [{
+    symbol: '≤',
+    flag: -1
+  }, {
+    symbol: '≥',
+    flag: 1
+  }]
 };
 
 export default constants;

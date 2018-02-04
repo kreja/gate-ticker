@@ -4,6 +4,10 @@
   "description": "__MSG_appDesc__",
   "version": "1.2",
   "default_locale": "en",
+  "background": {
+     "page": "background.html",
+     "persistent": true
+  },
   "browser_action": {
     "default_icon": "icons/icon128.png",
     "default_popup": "index.html",
@@ -18,7 +22,8 @@
   },
   "permissions": [
     "storage",
-    "\u003Call_urls>"
+    "\u003Call_urls>",
+    "notifications"
   ],
   "options_page": "options.html",
   "content_security_policy": "script-src 'self' http://127.0.0.1:8000; object-src 'self'"

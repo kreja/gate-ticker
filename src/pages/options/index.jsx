@@ -2,7 +2,7 @@
 
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { Range, Flex, WhiteSpace, Tabs, Button, Toast } from 'antd-mobile';
+import { Range, Flex, WhiteSpace, Tabs, Button, Toast, List, InputItem } from 'antd-mobile';
 import Tag from '../../components/tag';
 import fetch from '../../utils/ajax.js';
 import constants from '../../utils/constants.js';
@@ -10,28 +10,32 @@ import constants from '../../utils/constants.js';
 import 'antd-mobile/dist/antd-mobile.css';
 import './index.scss';
 
-const { defaultRefreshIntervalMs, maxIntervalMs, defaultSelectedMaps } = constants;
+const Item = List.Item;
+const { defaultRefreshIntervalMs, maxIntervalMs, defaultSelectedMaps, symbols } = constants;
 const getSecond = ms => ms / 1000;
 
 class Index extends React.Component {
   static propTypes = {
     refreshIntervalMs: PropTypes.number,
-    selectMaps: PropTypes.object
+    selectMaps: PropTypes.object,
+    noticeMaps: PropTypes.object
   }
 
   static defaultProps = {
     refreshIntervalMs: defaultRefreshIntervalMs,
-    selectMaps: defaultSelectedMaps
+    selectMaps: defaultSelectedMaps,
+    noticeMaps: {}
   }
 
   constructor(props) {
     super(props);
     
-    const { refreshIntervalMs, selectMaps } = this.props;
+    const { refreshIntervalMs, selectMaps, noticeMaps } = this.props;
 
     this.state = {
       refreshIntervalMs, // unit: ms
       selectMaps, // eg. {usdt: [btc, eth]}
+      noticeMaps,
 
       markets: [],
       exchangeMaps: {}, // eg. {usdt: [btc, eth]}
@@ -111,15 +115,35 @@ class Index extends React.Component {
     this.setState({ selectMaps });
   }
 
+  setNotice = (val, key) => {
+    const noticeMaps = Object.assign({}, this.state.noticeMaps);
+
+    if(val === ""){
+      delete noticeMaps[key];
+    }else{
+      noticeMaps[key] = {
+        rate: Number(val),
+        hasReached: false
+      };
+    }
+
+    this.setState({ noticeMaps });
+  }
+
   save = () => {
-    const { selectMaps, refreshIntervalMs } = this.state;
+    const { selectMaps, refreshIntervalMs, noticeMaps } = this.state;
 
     if (chrome.storage) {
       chrome.storage.sync.set({
         refreshIntervalMs,
-        selectMaps
+        selectMaps,
+        noticeMaps
       }, (items) => {
         Toast.success(chrome.i18n.getMessage("saveSuccess"), 1);
+
+        chrome.runtime.sendMessage({
+          method: 'CFGCHANGE'
+        }, (response) => {});
       });
     } else {
       console.log(this.state)
@@ -127,7 +151,8 @@ class Index extends React.Component {
   }
 
   render() {
-    const { refreshIntervalMs, markets, exchangeMaps, selectMaps } = this.state;
+    console.log(this.state.noticeMaps)
+    const { refreshIntervalMs, markets, exchangeMaps, selectMaps, noticeMaps } = this.state;
 
     const tabs = markets.map((m) => {
       return {title: m};
@@ -161,26 +186,60 @@ class Index extends React.Component {
         </Flex>
         <WhiteSpace size="lg" />
 
-        <h2>{chrome.i18n.getMessage("chooseExchange")}</h2>
-        <Tabs tabs={tabs} animated={false}>
-          {
-            markets.map((m) => {
-              const exList = exchangeMaps[m] || [];
-              return <Flex key={m} className="ex-list" wrap="wrap" align="start">
-                {
-                  exList.map((ex) => {
-                    return <Tag key={ex}
-                      selected={selectMaps[m] && selectMaps[m].indexOf(ex) > -1}
-                      onChange={this.changeExchange} value={`${ex}_${m}`}
-                    >
-                      {ex}
-                    </Tag>;
-                  })
-                }
-              </Flex>;
-            })
-          }
-        </Tabs>
+        <Flex align="start">
+          <Flex.Item>
+            <h2>{chrome.i18n.getMessage("chooseExchange")}</h2>
+            <Tabs tabs={tabs} animated={false} className="ex-box">
+              {
+                markets.map((m) => {
+                  const curMarketExList = exchangeMaps[m] || [];
+                  return <Flex key={m} className="ex-list" wrap="wrap" align="start">
+                    {
+                      curMarketExList.map((ex) => {
+                        return <Tag key={ex}
+                          selected={selectMaps[m] && selectMaps[m].indexOf(ex) > -1}
+                          onChange={this.changeExchange} value={`${ex}_${m}`}
+                        >
+                          {ex}
+                        </Tag>;
+                      })
+                    }
+                  </Flex>;
+                })
+              }
+            </Tabs>
+          </Flex.Item>
+          <Flex.Item>
+            <h2>设置提醒todo::（价格延迟，建议设置宽松一些）</h2>
+            <List className="notice-list">
+              {
+                markets.map((m) => {
+                  return (selectMaps[m] || []).map((coin) => {
+                    const exchange = `${coin}_${m}`;
+
+                    return <Item key={exchange}>
+                      <Flex>
+                        <div className="name">{exchange}</div>
+                        {
+                          symbols.map((item) => {
+                            const sym = item.symbol;
+                            const curNoticeKey = `${exchange}${sym}`;
+
+                            return <Flex.Item className="notice-set" key={sym}>
+                              <InputItem type="digit" value={(noticeMaps[curNoticeKey] || {}).rate} clear onChange={(val) => {
+                                this.setNotice(val, curNoticeKey);
+                              }}>{sym}</InputItem>
+                            </Flex.Item>
+                          })
+                        }
+                      </Flex>
+                    </Item>
+                  });
+                })
+              }
+            </List>
+          </Flex.Item>
+        </Flex>
         <WhiteSpace size="lg" />
 
         <Button className="btn-save" type="primary" onClick={this.save}>{chrome.i18n.getMessage("save")}</Button>
@@ -192,7 +251,8 @@ class Index extends React.Component {
 if (chrome.storage) {
   chrome.storage.sync.get({
     refreshIntervalMs: defaultRefreshIntervalMs,
-    selectMaps: defaultSelectedMaps
+    selectMaps: defaultSelectedMaps,
+    noticeMaps: {}
   }, (items) => {
     ReactDOM.render(<Index {...items} />, document.getElementById('example'));
   });
