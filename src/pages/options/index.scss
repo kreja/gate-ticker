@@ -68,6 +68,13 @@ a:hover {
       width: 63px;
     }
   }
+  .set-alert-notice{
+    float: right;
+
+    .am-switch-checkbox{
+      cursor: pointer;
+    }
+  }
   .notice-list{
     max-height: $maxH + 43px;
     overflow: scroll;

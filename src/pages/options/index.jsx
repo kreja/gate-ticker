@@ -2,7 +2,7 @@
 
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { Range, Flex, WhiteSpace, Tabs, Button, Toast, List, InputItem } from 'antd-mobile';
+import { Range, Flex, WhiteSpace, Tabs, Button, Toast, List, InputItem, Switch } from 'antd-mobile';
 import Tag from '../../components/tag';
 import fetch from '../../utils/ajax.js';
 import constants from '../../utils/constants.js';
@@ -20,22 +20,25 @@ class Index extends React.Component {
     noticeIntervalMs: PropTypes.number,
     refreshIntervalMs: PropTypes.number,
     selectMaps: PropTypes.object,
-    noticeMaps: PropTypes.object
+    noticeMaps: PropTypes.object,
+    alertNotice: PropTypes.bool,
   }
 
   static defaultProps = {
     noticeIntervalMs: defaultNoticeIntervalMs,
     refreshIntervalMs: defaultRefreshIntervalMs,
     selectMaps: defaultSelectedMaps,
-    noticeMaps: {}
+    noticeMaps: {},
+    alertNotice: true
   }
 
   constructor(props) {
     super(props);
     
-    const { noticeIntervalMs, refreshIntervalMs, selectMaps, noticeMaps } = this.props;
+    const { alertNotice, noticeIntervalMs, refreshIntervalMs, selectMaps, noticeMaps } = this.props;
 
     this.state = {
+      alertNotice,
       noticeIntervalMs,
       refreshIntervalMs, // unit: ms
       selectMaps, // eg. {usdt: [btc, eth]}
@@ -127,6 +130,10 @@ class Index extends React.Component {
     this.setState({ selectMaps });
   }
 
+  changeAlertNotice = (alertNotice) => {
+    this.setState({ alertNotice });
+  }
+
   setNotice = (val, key) => {
     const noticeMaps = Object.assign({}, this.state.noticeMaps);
 
@@ -143,10 +150,11 @@ class Index extends React.Component {
   }
 
   save = () => {
-    const { selectMaps, refreshIntervalMs, noticeMaps, noticeIntervalMs } = this.state;
+    const { selectMaps, refreshIntervalMs, noticeMaps, noticeIntervalMs, alertNotice } = this.state;
 
     if (chrome.storage) {
       chrome.storage.sync.set({
+        alertNotice,
         noticeIntervalMs,
         refreshIntervalMs,
         selectMaps,
@@ -164,7 +172,7 @@ class Index extends React.Component {
   }
 
   render() {
-    const { noticeIntervalMs, refreshIntervalMs, markets, exchangeMaps, selectMaps, noticeMaps } = this.state;
+    const { alertNotice, noticeIntervalMs, refreshIntervalMs, markets, exchangeMaps, selectMaps, noticeMaps } = this.state;
 
     const tabs = markets.map((m) => {
       return {title: m};
@@ -251,6 +259,11 @@ class Index extends React.Component {
             <h2>
               {chrome.i18n.getMessage("setTip")}
               <span className="tip">{chrome.i18n.getMessage("setTipTip")}</span>
+              <Switch
+                className="set-alert-notice"
+                checked={alertNotice}
+                onClick={this.changeAlertNotice}
+              />
             </h2>
             <List className="notice-list">
               {
@@ -294,7 +307,8 @@ if (chrome.storage) {
     noticeIntervalMs: defaultNoticeIntervalMs,
     refreshIntervalMs: defaultRefreshIntervalMs,
     selectMaps: defaultSelectedMaps,
-    noticeMaps: {}
+    noticeMaps: {},
+    alertNotice: true
   }, (items) => {
     ReactDOM.render(<Index {...items} />, document.getElementById('example'));
   });

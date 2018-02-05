@@ -9,6 +9,9 @@ import 'antd-mobile/dist/antd-mobile.css'; // for shared
 const { defaultRefreshIntervalMs, defaultSelectedMaps, symbols, defaultNoticeIntervalMs } = constants;
 let _cfg;
 let lastCount = 0;
+chrome.browserAction.setBadgeText({
+  text: ''
+});
 
 const background = {
   init: () => {
@@ -20,7 +23,8 @@ const background = {
           noticeIntervalMs: defaultNoticeIntervalMs,
           refreshIntervalMs: defaultRefreshIntervalMs,
           selectMaps: defaultSelectedMaps,
-          noticeMaps: {}
+          noticeMaps: {},
+          alertNotice: true
         }, (items) => {
           _cfg = items;
         });
@@ -80,7 +84,7 @@ const background = {
         });
       });
 
-      if(notices[0]){
+      if(notices[0] && _cfg.alertNotice){
         chrome.notifications.create('', {
           type: 'basic',
           iconUrl: 'icons/icon128.png',
@@ -107,7 +111,8 @@ chrome.storage.sync.get({
   noticeIntervalMs: defaultNoticeIntervalMs,
   refreshIntervalMs: defaultRefreshIntervalMs,
   selectMaps: defaultSelectedMaps,
-  noticeMaps: {}
+  noticeMaps: {},
+  alertNotice: true
 }, (items) => {
   _cfg = items;
   background.init();
