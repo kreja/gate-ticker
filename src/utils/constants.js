@@ -4,7 +4,7 @@ const constants = {
   defaultNoticeIntervalMs: 1000 * 60 * 1, // unit: ms
   maxNoticeIntervalMs: 1000 * 60 * 30, // unit: ms
   defaultSelectedMaps: { // default selected exchange list
-    usdt: ['btc', 'eth'],
+    usdt: ['btc', 'eth'], // NOTE::all coin name and exchange name use lowercase, display as uppercase
     btc: ['eth']
   },
 

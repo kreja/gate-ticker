@@ -100,7 +100,8 @@ class Index extends React.Component {
         <List className="coin-list">
           {
             dataList.map((item, index) => {
-              const { last, percentChange, exchange } = item;
+              const { last, percentChange: oriPercentChange, exchange } = item;
+              let percentChange = Number(oriPercentChange);
               let cls;
               let reached = false;
 

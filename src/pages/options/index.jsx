@@ -68,7 +68,9 @@ class Index extends React.Component {
         const exchangeMaps = {};
 
         data.map((item = '') => {
-          const [exchange, market] = item.split('_') || ['', ''];
+          let [exchange, market] = item.split('_') || ['', ''];
+          exchange = exchange.toLowerCase();
+          market = market.toLowerCase();
 
           if (markets.indexOf(market) < 0) {
             markets.push(market);
@@ -235,25 +237,27 @@ class Index extends React.Component {
         <Flex align="start">
           <Flex.Item>
             <h2>{chrome.i18n.getMessage("chooseExchange")}</h2>
-            <Tabs tabs={tabs} animated={false} className="ex-box">
-              {
-                markets.map((m) => {
-                  const curMarketExList = exchangeMaps[m] || [];
-                  return <Flex key={m} className="ex-list" wrap="wrap" align="start">
-                    {
-                      curMarketExList.map((ex) => {
-                        return <Tag key={ex}
-                          selected={selectMaps[m] && selectMaps[m].indexOf(ex) > -1}
-                          onChange={this.changeExchange} value={`${ex}_${m}`}
-                        >
-                          {ex}
-                        </Tag>;
-                      })
-                    }
-                  </Flex>;
-                })
-              }
-            </Tabs>
+            <div className="ex-box coin">
+              <Tabs tabs={tabs} animated={false}>
+                {
+                  markets.map((m) => {
+                    const curMarketExList = exchangeMaps[m] || [];
+                    return <Flex key={m} className="ex-list" wrap="wrap" align="start">
+                      {
+                        curMarketExList.map((ex) => {
+                          return <Tag key={ex}
+                            selected={selectMaps[m] && selectMaps[m].indexOf(ex) > -1}
+                            onChange={this.changeExchange} value={`${ex}_${m}`}
+                          >
+                            {ex}
+                          </Tag>;
+                        })
+                      }
+                    </Flex>;
+                  })
+                }
+              </Tabs>
+            </div>
           </Flex.Item>
           <Flex.Item>
             <h2>
@@ -273,7 +277,7 @@ class Index extends React.Component {
 
                     return <Item key={exchange}>
                       <Flex>
-                        <div className="name">{exchange}</div>
+                        <div className="name exchange">{exchange}</div>
                         {
                           symbols.map((item) => {
                             const sym = item.symbol;
